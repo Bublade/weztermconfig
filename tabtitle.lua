@@ -67,12 +67,16 @@ local function tab_process_info(tab_info)
 
 	local working_dir = (pane_working_dir ~= nil and pane_working_dir or wezterm.url.parse("file://~"))
 	local home_dir = (os.getenv("HOME") or os.getenv("USERPROFILE") or nil)
-	local home_dir_path = (home_dir ~= nil and wezterm.url.parse("file://" .. home_dir).file_path or "") .. "/"
+	local home_dir_path = (home_dir ~= nil and wezterm.url.parse("file://" .. home_dir).file_path or "")
 	local show_dir = working_dir.file_path
+
+	if pane_working_dir ~= nil then
+		print(tab_info.tab_index + 1, home_dir_path, show_dir)
+	end
 
 	if string.sub(working_dir.file_path, 1, #home_dir_path) == home_dir_path then
 		show_dir = working_dir.file_path == home_dir_path and "~"
-			or string.gsub(working_dir.file_path, home_dir_path, "~/")
+			or string.gsub(working_dir.file_path, home_dir_path, "~")
 	end
 
 	local proc = get_app_proc(pane:get_foreground_process_info())
@@ -115,7 +119,6 @@ local function on_format_title(
 
 	local working_dir = tab_proc_info[2]
 
-	print(working_dir, string.gsub(working_dir, [[/.?([a-zA-Z0-9])[^/]+/(.*)?]], "/%1/%2") .. "")
 	if not config.use_fancy_tab_bar and #working_dir > (config.tab_max_width - #app_display - #pane_info) then
 		working_dir = string.gsub(working_dir, [[/([.]?[a-zA-Z0-9])[^/]+]], "/%1")
 		-- working_dir = wezterm.truncate_left(working_dir, (max_width - #app_display - #pane_info))
