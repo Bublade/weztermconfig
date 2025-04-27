@@ -23,7 +23,7 @@ config.font_size = 10
 
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.tab_max_width = 20
+config.tab_max_width = 32
 theme.load(config)
 
 config.default_prog = { "pwsh.exe" }
