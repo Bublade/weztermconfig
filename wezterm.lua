@@ -1,9 +1,10 @@
 package.path = package.path .. (";" .. ((os.getenv("HOME") or os.getenv("USERPROFILE")) .. [[/.lua_mods/?.lua]]))
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
+
 local launch_menu = require("launchmenu")
 local theme = require("theme")
-local tabtitle = require("tabtitle")
+local tab_bar = require("tab-bar")
 local my_hyperlinks = require("my-hyperlinks")
 local apps = require("apps")
 
@@ -12,7 +13,7 @@ local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
 
-tabtitle.load(apps)
+tab_bar.load(apps)
 my_hyperlinks.load(config)
 
 config.font = wezterm.font_with_fallback({
@@ -25,6 +26,7 @@ config.font_size = 12
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.tab_max_width = 32
+
 theme.load(config)
 
 config.default_prog = { "pwsh.exe" }
