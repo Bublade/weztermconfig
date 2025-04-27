@@ -68,10 +68,6 @@ local function tab_process_info(tab_info)
 	local home_dir_path = (home_dir ~= nil and wezterm.url.parse("file://" .. home_dir).file_path or "")
 	local show_dir = working_dir.file_path
 
-	if pane_working_dir ~= nil then
-		print(tab_info.tab_index + 1, home_dir_path, show_dir)
-	end
-
 	if string.sub(working_dir.file_path, 1, #home_dir_path) == home_dir_path then
 		show_dir = working_dir.file_path == home_dir_path and "~"
 			or string.gsub(working_dir.file_path, home_dir_path, "~")
