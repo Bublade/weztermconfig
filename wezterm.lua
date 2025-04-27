@@ -21,7 +21,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = 10
 
--- config.use_fancy_tab_bar = false
+config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.tab_max_width = 20
 theme.load(config)
