@@ -8,14 +8,12 @@ local LEFT_SIDE = wezterm.nerdfonts.ple_left_half_circle_thick
 -- The filled in variant of the > symbol
 local RIGHT_SIDE = wezterm.nerdfonts.ple_right_half_circle_thick
 
-local apps_to_show = {
-	nvim = { icon = "", color = "#00b952" },
-	lazygit = { icon = "󰊢", color = "#f05133" },
-	pwsh = { icon = "󰨊", color = "#4d87ec" },
-}
+---@class tabApps
+---@field icon string Icon to display
+---@field color string Color of the icon
 
-apps_to_show.neovim = apps_to_show.nvim
-apps_to_show.powershell = apps_to_show.pwsh
+---@type tabApps[]
+local apps_to_show = {}
 
 local function get_parent_proc(proc)
 	if proc ~= nil and proc.pid then
@@ -159,7 +157,11 @@ local function on_format_title(
 	}
 end
 
-function M.load()
+---@param apps? tabApps[]
+function M.load(apps)
+	apps = apps or {}
+	apps_to_show = apps
+
 	wezterm.on("format-tab-title", on_format_title)
 	wezterm.on("update-right-status", function(window, _)
 		local date = wezterm.strftime("%Y-%m-%d %H:%M:%S")

@@ -5,13 +5,14 @@ local launch_menu = require("launchmenu")
 local theme = require("theme")
 local tabtitle = require("tabtitle")
 local my_hyperlinks = require("my-hyperlinks")
+local apps = require("apps")
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
 
-tabtitle.load()
+tabtitle.load(apps)
 my_hyperlinks.load(config)
 
 config.font = wezterm.font_with_fallback({
