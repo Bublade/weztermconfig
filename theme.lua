@@ -20,7 +20,7 @@ function M.command_palette(config)
 	config.command_palette_bg_color = M.palette.base
 	config.command_palette_fg_color = M.palette.text
 	-- config.command_palette_font = config.font
-	-- config.command_palette_font_size = 14.0
+	config.command_palette_font_size = config.font_size
 	config.command_palette_rows = 14
 end
 
@@ -64,17 +64,18 @@ function M.colors()
 	}
 end
 
-function M.window_frame()
+function M.window_frame(config)
 	return {
 		active_titlebar_bg = M.base_color("black"),
 		inactive_titlebar_bg = M.base_color("black"),
-		font_size = 14,
+		font_size = config.font_size or 10,
+		font = config.font,
 	}
 end
 
 function M.load(config)
 	config.colors = M.colors()
-	config.window_frame = M.window_frame()
+	config.window_frame = M.window_frame(config)
 	M.command_palette(config)
 end
 
