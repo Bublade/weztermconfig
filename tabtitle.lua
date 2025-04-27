@@ -113,12 +113,16 @@ local function on_format_title(
 		or ""
 	)
 
-	local working_dir = wezterm.truncate_right(tab_proc_info[2], max_width - 2)
-	working_dir = string.gsub(working_dir, [[/$]], "")
+	local working_dir = tab_proc_info[2]
 
+	print(working_dir, string.gsub(working_dir, [[/.?([a-zA-Z0-9])[^/]+/(.*)?]], "/%1/%2") .. "")
 	if not config.use_fancy_tab_bar and #working_dir > (config.tab_max_width - #app_display - #pane_info) then
-		working_dir = wezterm.truncate_left(working_dir, (max_width - #app_display - #pane_info))
+		working_dir = string.gsub(working_dir, [[/([.]?[a-zA-Z0-9])[^/]+]], "/%1")
+		-- working_dir = wezterm.truncate_left(working_dir, (max_width - #app_display - #pane_info))
 	end
+
+	working_dir = string.gsub(working_dir, [[/$]], "")
+	working_dir = wezterm.truncate_right(working_dir, max_width - 2)
 	local active_other = (tab.tab_index > 0 and tab.is_active)
 
 	if config.use_fancy_tab_bar then
