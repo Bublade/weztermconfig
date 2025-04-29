@@ -21,7 +21,7 @@ config.font = wezterm.font_with_fallback({
 	"FiraMono Nerd Font",
 	"JetBrains Mono",
 })
-config.font_size = 12
+config.font_size = 11
 
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
