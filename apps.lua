@@ -5,5 +5,6 @@ return {
 	neovim = neovim,
 	pwsh = powershell,
 	powershell = powershell,
+	wsl = { icon = "", color = "#d9a511" },
 	lazygit = { icon = "󰊢", color = "#f05133" },
 }
