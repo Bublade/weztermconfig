@@ -7,4 +7,5 @@ return {
 	powershell = powershell,
 	wsl = { icon = "", color = "#d9a511" },
 	lazygit = { icon = "󰊢", color = "#f05133" },
+	ssh = { icon = "", color = "#fcd058" },
 }
