@@ -29,7 +29,9 @@ config.tab_max_width = 32
 
 theme.load(config)
 
-config.default_prog = { "pwsh.exe" }
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+    config.default_prog = { "pwsh.exe" }
+end
 
 config.cell_width = 1.0
 config.adjust_window_size_when_changing_font_size = false
