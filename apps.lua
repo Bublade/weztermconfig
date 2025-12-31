@@ -1,5 +1,5 @@
-local powershell = { icon = "󰨊", color = "#57923d" }
-local neovim = { icon = "", color = "#00b952" }
+local powershell = { icon = "󰨊", color = "#4d87ec" }
+local neovim = { icon = "", color = "#5fb950" }
 local sh = { icon = "", color = "#47b353"}
 return {
 	nvim = neovim,
