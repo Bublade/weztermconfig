@@ -12,6 +12,7 @@ local apps = require("apps")
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
+config.mux_enable_ssh_agent = false
 
 tab_bar.load(apps)
 my_hyperlinks.load(config)
