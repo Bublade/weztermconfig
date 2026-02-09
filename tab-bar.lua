@@ -53,6 +53,20 @@ local function get_app_proc(proc)
 	return get_app_proc(parent)
 end
 
+local function format_working_dir(working_dir)
+	working_dir = (working_dir ~= nil and working_dir or wezterm.url.parse("file://~"))
+	local home_dir = (os.getenv("HOME") or os.getenv("USERPROFILE") or nil)
+	local home_dir_path = (home_dir ~= nil and wezterm.url.parse("file://" .. home_dir).file_path or "")
+	local show_dir = working_dir.file_path
+
+	if string.sub(working_dir.file_path, 1, #home_dir_path) == home_dir_path then
+		show_dir = working_dir.file_path == home_dir_path and "~"
+			or string.gsub(working_dir.file_path, home_dir_path, "~")
+	end
+    return show_dir
+end
+
+
 local function tab_process_info(tab_info)
 	local title = tab_info.tab_title
 	if title and #title > 0 then
@@ -62,17 +76,7 @@ local function tab_process_info(tab_info)
 	local active_pane_info = tab_info.active_pane
 	local pane = wezterm.mux.get_pane(active_pane_info.pane_id)
 	local pane_working_dir = pane:get_current_working_dir()
-
-	local working_dir = (pane_working_dir ~= nil and pane_working_dir or wezterm.url.parse("file://~"))
-	local home_dir = (os.getenv("HOME") or os.getenv("USERPROFILE") or nil)
-	local home_dir_path = (home_dir ~= nil and wezterm.url.parse("file://" .. home_dir).file_path or "")
-	local show_dir = working_dir.file_path
-
-	if string.sub(working_dir.file_path, 1, #home_dir_path) == home_dir_path then
-		show_dir = working_dir.file_path == home_dir_path and "~"
-			or string.gsub(working_dir.file_path, home_dir_path, "~")
-	end
-
+	local show_dir = format_working_dir(pane_working_dir)
 	local proc = get_app_proc(pane:get_foreground_process_info())
 	local interesting_porc = proc ~= nil and strip_win_exe(proc.name) or ""
 
@@ -154,11 +158,23 @@ local function on_format_title(
 end
 
 ---@param apps? tabApps[]
-function M.load(apps)
+function M.load(apps, config)
 	apps = apps or {}
 	apps_to_show = apps
 
 	wezterm.on("format-tab-title", on_format_title)
+    wezterm.on("update-status", function(window, pane)
+        local colors = config.colors;
+        local foreground = colors.foreground
+
+		window:set_left_status(wezterm.format({
+            { Foreground = { Color = "#eaa91e"}},
+			{ Text = ' 󰉋 ' },
+            { Foreground = { Color = foreground}},
+			{ Text = format_working_dir(pane:get_current_working_dir()) },
+			{ Text = ' ' },
+		}))
+    end)
 	wezterm.on("update-right-status", function(window, _)
 		local date = wezterm.strftime("%Y-%m-%d %H:%M:%S")
 		window:set_right_status(wezterm.format({

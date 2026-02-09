@@ -14,7 +14,7 @@ local config = wezterm.config_builder()
 config.automatically_reload_config = true
 config.mux_enable_ssh_agent = false
 
-tab_bar.load(apps)
+tab_bar.load(apps, config)
 my_hyperlinks.load(config)
 
 config.font = wezterm.font_with_fallback({
