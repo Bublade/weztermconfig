@@ -99,6 +99,8 @@ local function on_format_title(
 	local edge_background = (tab.is_active and tb_colors.background or background)
 	local edge_foreground = background
 	local tab_proc_info = tab_process_info(tab)
+	local procname = tab_proc_info[1]
+	local working_dir = tab_proc_info[2]
 
 	local pane_info = string.format(
 		"%s%s:",
@@ -106,16 +108,21 @@ local function on_format_title(
 		#tab.panes > 1 and string.format("-%s", tab.active_pane.pane_index + 1) or ""
 	)
 
-	local app = apps_to_show[tab_proc_info[1]] ~= nil and apps_to_show[tab_proc_info[1]]
+	local app = apps_to_show[procname] ~= nil and apps_to_show[procname]
 		or { icon = "", color = foreground }
 
 	local app_display = (
 		app.icon ~= "" and (app.icon .. " ")
-		or tab_proc_info[1] ~= nil and (tab_proc_info[1] .. " ")
+		or procname ~= nil and (procname .. " ")
 		or ""
 	)
 
-	local working_dir = tab_proc_info[2]
+    local app_name = (
+		app.name ~= "" and (app.name)
+		or procname ~= nil and (procname)
+		or ""
+	)
+
 
 	if not config.use_fancy_tab_bar and #working_dir > (config.tab_max_width - #app_display - #pane_info) then
 		working_dir = string.gsub(working_dir, [[/([.]?[a-zA-Z0-9])[^/]+]], "/%1")
@@ -135,7 +142,7 @@ local function on_format_title(
 			{ Text = app_display },
 			{ Background = { Color = background } },
 			{ Foreground = { Color = foreground } },
-			{ Text = working_dir },
+			{ Text = app_name },
 		}
 	end
 
@@ -150,7 +157,7 @@ local function on_format_title(
 		{ Text = app_display },
 		{ Background = { Color = background } },
 		{ Foreground = { Color = foreground } },
-		{ Text = working_dir },
+		{ Text = app_name },
 		{ Background = { Color = edge_background } },
 		{ Foreground = { Color = edge_foreground } },
 		{ Text = RIGHT_SIDE },
