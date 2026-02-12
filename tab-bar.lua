@@ -11,6 +11,7 @@ local RIGHT_SIDE = wezterm.nerdfonts.ple_right_half_circle_thick
 ---@class tabApps
 ---@field icon string Icon to display
 ---@field color string Color of the icon
+---@field name string Display name
 
 ---@type tabApps[]
 local apps_to_show = {}
@@ -63,6 +64,12 @@ local function format_working_dir(working_dir)
 		show_dir = working_dir.file_path == home_dir_path and "~"
 			or string.gsub(working_dir.file_path, home_dir_path, "~")
 	end
+
+	if #show_dir > 80 then
+		show_dir = string.gsub(show_dir, [[/([.]?[a-zA-Z0-9])[^/]+]], "/%1")
+	end
+
+	show_dir = string.gsub(show_dir, [[/$]], "")
     return show_dir
 end
 
@@ -89,7 +96,7 @@ local function on_format_title(
 	_ --[[panes]],
 	config,
 	_ --[[hover]],
-	max_width
+	_ -- [[max_width]]]
 )
 	local tb_colors = config.colors.tab_bar
 	local tab_colors = (tab.is_active and tb_colors.active_tab or tb_colors.inactive_tab)
@@ -100,7 +107,6 @@ local function on_format_title(
 	local edge_foreground = background
 	local tab_proc_info = tab_process_info(tab)
 	local procname = tab_proc_info[1]
-	local working_dir = tab_proc_info[2]
 
 	local pane_info = string.format(
 		"%s%s:",
@@ -123,14 +129,6 @@ local function on_format_title(
 		or ""
 	)
 
-
-	if not config.use_fancy_tab_bar and #working_dir > (config.tab_max_width - #app_display - #pane_info) then
-		working_dir = string.gsub(working_dir, [[/([.]?[a-zA-Z0-9])[^/]+]], "/%1")
-		-- working_dir = wezterm.truncate_left(working_dir, (max_width - #app_display - #pane_info))
-	end
-
-	working_dir = string.gsub(working_dir, [[/$]], "")
-	working_dir = wezterm.truncate_right(working_dir, max_width - 2)
 	local active_other = (tab.tab_index > 0 and tab.is_active)
 
 	if config.use_fancy_tab_bar then
