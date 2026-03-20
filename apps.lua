@@ -7,6 +7,7 @@ return {
     powershell = powershell,
     wsl = { icon = "", color = "#d9a511", name = "wsl" },
     lazygit = { icon = "󰊢", color = "#f05133", name = "lazygit" },
+    git = { icon = "󰊢", color = "#f05133", name = "git" },
     ssh = { icon = "", color = "#fcd058", name = "ssh" },
     bash = { icon = "", color = "#47b353", name = "bash" },
     zsh = { icon = "%_", color = "#f15a24", name = "zsh" },
