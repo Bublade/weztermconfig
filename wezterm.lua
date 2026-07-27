@@ -19,6 +19,7 @@ my_hyperlinks.load(config)
 
 config.font = wezterm.font_with_fallback({
 	--[[ "FiraCode Nerd Font Mono",]]
+    "JetBrainsMono Nerd Font",
 	"FiraMono Nerd Font",
 	"JetBrains Mono",
 })
