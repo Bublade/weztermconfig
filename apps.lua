@@ -1,5 +1,7 @@
 local powershell = { icon = "󰨊", color = "#4d87ec", name = "powershell" }
 local neovim = { icon = "", color = "#5fb950", name = "neovim" }
+local ai = {icon = " ", color = "#d77b5c", name = "AI"}
+
 return {
     nvim = neovim,
     neovim = neovim,
@@ -13,5 +15,6 @@ return {
     zsh = { icon = "%_", color = "#f15a24", name = "zsh" },
     nu = { icon = "nu", color = "#4e9a06", name = "nushell" },
     yazi  = { icon =  "󰉋", color = "#03a9f4", name = "yazi" },
+    claude = ai
 }
 
