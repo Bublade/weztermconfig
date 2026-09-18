@@ -227,17 +227,15 @@ function M.load(apps, config)
         local working_dir = pane:get_current_working_dir()
         local branch = get_git_branch(working_dir)
 
+        local branch_icon = branch and '  '  or ''
         local branch_name = branch and branch or ''
-
-        print(branch_name)
 
         window:set_left_status(wezterm.format({
             { Foreground = { Color = "#eaa91e"}},
             { Text = ' 󰉋 ' },
             { Foreground = { Color = foreground}},
             { Text = format_working_dir(working_dir) },
-            { Text = ' ' },
-            { Text = ' ' },
+            { Text = branch_icon },
             { Text = branch_name },
             { Text = ' ' },
         }))
