@@ -7,6 +7,7 @@ return {
     neovim = neovim,
     pwsh = powershell,
     powershell = powershell,
+    node = { icon = "󰎙", color = "#61b448", name = ""},
     wsl = { icon = "", color = "#d9a511", name = "wsl" },
     lazygit = { icon = "󰊢", color = "#f05133", name = "lazygit" },
     git = { icon = "󰊢", color = "#f05133", name = "git" },
