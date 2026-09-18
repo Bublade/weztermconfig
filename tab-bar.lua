@@ -12,6 +12,7 @@ local RIGHT_SIDE = wezterm.nerdfonts.ple_right_half_circle_thick
 ---@field icon string Icon to display
 ---@field color string Color of the icon
 ---@field name string Display name
+---@field display_name function Custom function for the name
 
 ---@type tabApps[]
 local apps_to_show = {}
@@ -87,7 +88,7 @@ local function tab_process_info(tab_info)
 	local proc = get_app_proc(pane:get_foreground_process_info())
 	local interesting_porc = proc ~= nil and strip_win_exe(proc.name) or ""
 
-	return { interesting_porc, show_dir }
+	return { interesting_porc, show_dir, proc }
 end
 
 local function on_format_title(
@@ -128,6 +129,10 @@ local function on_format_title(
 		or procname ~= nil and (procname)
 		or ""
 	)
+
+    -- if app.display_name ~= nil then
+    --     app_name = app.display_name(tab_proc_info[3])
+    -- end
 
 	local active_other = (tab.tab_index > 0 and tab.is_active)
 
