@@ -38,6 +38,7 @@ end
 config.cell_width = 1.0
 config.adjust_window_size_when_changing_font_size = false
 config.window_decorations = "RESIZE"
+config.enable_wayland = false
 config.window_padding = {
 	left = ".5cell",
 	right = 0,
